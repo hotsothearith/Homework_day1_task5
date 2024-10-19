@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bouncing Ball Game with Location</title>
+    <style>
+        canvas {
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="myCanvas" width="400" height="300"></canvas>
+    <button id="getLocationButton">Show My Location</button>
+    <p id="locationInfo"></p>
+    <script>
+        const canvas = document.getElementById('myCanvas');
+const ctx = canvas.getContext('2d');
+
+// ... (rest of your game code)
+
+const getLocationButton = document.getElementById('getLocationButton');
+const locationInfo = document.getElementById('locationInfo');
+
+getLocationButton.addEventListener('click', () => {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                const latitude = position.coords.latitude;
+                const longitude = position.coords.longitude;
+
+                locationInfo.textContent = `Your current location is: (${latitude}, ${longitude})`;
+            },
+            (error) => {
+                console.error('Error getting location:', error);
+                locationInfo.textContent = 'Unable to get your location.';
+            }
+        );
+    } else {
+        locationInfo.textContent = 'Geolocation is not supported by your browser.';
+    }
+});
+    </script>
+</body>
+</html>

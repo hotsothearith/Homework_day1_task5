@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bouncing Ball Game</title>
+    <style>
+        canvas {
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="myCanvas" width="400" height="300"></canvas>
+    <script >
+        const canvas = document.getElementById('myCanvas');
+const ctx = canvas.getContext('2d');
+
+let ballX = canvas.width / 2;
+let ballY = canvas.height / 2;
+let ballRadius = 10;
+let ballSpeedX = 2;
+let ballSpeedY = 2;
+let ballColor = 'red';
+
+function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    ctx.beginPath();
+    ctx.arc(ballX, ballY, ballRadius, 0, 2 * Math.PI);
+    ctx.fillStyle = ballColor;
+    ctx.fill();
+    ctx.closePath();
+
+    ballX += ballSpeedX;
+    ballY += ballSpeedY;
+
+    if (ballX + ballRadius > canvas.width || ballX - ballRadius < 0) {
+        ballSpeedX = -ballSpeedX;
+        ballColor = getRandomColor();
+    }
+
+    if (ballY + ballRadius > canvas.height || ballY - ballRadius < 0) {
+        ballSpeedY = -ballSpeedY;
+        ballColor = getRandomColor();
+    }
+}
+
+function getRandomColor() {
+    const letters = '0123456789ABCDEF';
+    let color = '#';
+    for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+}
+
+function animate() {
+    draw();
+    requestAnimationFrame(animate);
+}
+
+animate();
+    </script>
+</body>
+</html>
